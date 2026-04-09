@@ -1,0 +1,57 @@
+name: Build and Deploy Hexo Blog
+
+on:
+  push:
+    branches: 
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1️⃣ Checkout 代码
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # 2️⃣ 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      # 3️⃣ 安装依赖
+      - name: Install dependencies
+        run: npm install
+      
+      # 4️⃣ 构建静态文件
+      - name: Build
+        run: npm run build
+      
+      # 5️⃣ 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          cname: example.com  # ⚠️ 如果使用自定义域名，修改这里
+      
+      # 6️⃣ 上传到自定义服务器（可选）
+      # - name: Deploy to Server
+      #   if: github.ref == 'refs/heads/main'
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     hosts: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     key: ${{ secrets.SERVER_SSH_KEY }}
+      #     source: "public/*"
+      #     target: "/var/www/html/"
