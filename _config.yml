@@ -4,16 +4,16 @@
 
 # Site
 title: 我的个人博客
-subtitle: 技术分享与思考
+subtitle: 生活不止眼前，还有诗和远方
 description: 通过本博客分享技术心得、项目实践和行业洞察
 keywords: 技术,开发,博客
-author: Developer
+author: ForForever
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://example.com
+url: https://zxslemon-ui.github.io
 permalink: :year/:month/:day/:title/
 root: /
 permalink_defaults:
